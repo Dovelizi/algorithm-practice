@@ -1,7 +1,6 @@
 package com.lizi.year2022.month9.day0920;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author lizi
@@ -9,19 +8,34 @@ import java.util.List;
  * @description 698.划分为k个相等的子集
  **/
 public class One0920 {
-    public boolean canPartitionKSubsets(int[] nums, int k) {
-        boolean ans = false;
+    public static void main(String[] args) {
+        canPartitionKSubsets(new int[]{4, 3, 2, 3, 5, 2, 1}, 4);
+    }
+    public static boolean canPartitionKSubsets(int[] nums, int k) {
         int len = nums.length;
         int sum = Arrays.stream(nums).sum();
         if(sum % k != 0){
-            return ans;
+            return false;
         }
-        int avg = sum / k;
-        return ans;
+        Arrays.sort(nums);
+        return  dfs(nums,new boolean[len], nums.length - 1, sum / k, 0, k);
     }
-    public boolean dfs(int[] nums, boolean[] vis, List<Integer> list, int k, int avg){
-        if(list.size() == k){
-            return list.stream().reduce(Integer::compareTo).get() == avg;
+    public static boolean dfs(int[] nums, boolean[] vis, int step, int tar, int cur, int k){
+       if(k == 1){
+           return true;
+       }
+       if(cur == tar){
+           return dfs(nums, vis, nums.length - 1, tar,0, k - 1);
+       }
+        for (int i = step; i >= 0 ; i--) {
+            if(vis[i] || cur + nums[i] > tar){
+                continue ;
+            }
+            vis[i] = true;
+            if(dfs(nums, vis, i - 1, tar, cur + nums[i], k)){
+                return true;
+            }
+            vis[i] = false;
         }
         return false;
     }
