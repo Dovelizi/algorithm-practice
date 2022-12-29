@@ -3,7 +3,7 @@ package com.lizi.year2022.month11.day1129;
 /**
  * @author lizi
  * @date 2022/11/29 19:05
- * @description TODO
+ * @description 1758. 生成交替二进制字符串的最少操作数
  **/
 public class One1129 {
     public int minOperations(String s) {
